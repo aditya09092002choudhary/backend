@@ -9,6 +9,8 @@ const News = require('./models/news.model')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const dotenv = require("dotenv");
+dotenv.config();
 
 app.use(cors())
 app.options('*', cors())
@@ -17,10 +19,10 @@ app.use(express.json())
 app.use(passport.initialize());
 const PORT = process.env.PORT||1337;
 const date = new Date();
+const uri = process.env.ATLAS_URI
 const addDate = `${date.getDate()}/${
   date.getMonth() + 1
 }/${date.getFullYear()}`;
-
 require('./passport');
 
 // var Parse = require('parse/node');
@@ -29,9 +31,7 @@ require('./passport');
 // Parse.serverURL = 'https://parseapi.back4app.com/'
 
 // mongoose.connect('mongodb://localhost:27017/daily1DB');
-mongoose.connect(
-  "mongodb+srv://adityachoudhary1980:Aditya88@cluster0.9ikok.mongodb.net/dailyDB"
-);
+mongoose.connect(uri,{ useNewUrlParser: true });
 
 app.get("/", (req, res) => {
 	// res.send("Live");
