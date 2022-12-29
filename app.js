@@ -25,13 +25,9 @@ const addDate = `${date.getDate()}/${
 }/${date.getFullYear()}`;
 require('./passport');
 
-// var Parse = require('parse/node');
-
-// Parse.initialize("APP_ID","JS_KEY"); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
-// Parse.serverURL = 'https://parseapi.back4app.com/'
 
 // mongoose.connect('mongodb://localhost:27017/daily1DB');
-mongoose.connect(uri,{ useNewUrlParser: true });
+mongoose.connect("mongodb+srv://adityachoudhary1980:Aditya88@cluster0.9ikok.mongodb.net/dailyDB?retryWrites=true&w=majority");
 
 app.get("/", (req, res) => {
 	// res.send("Live");
@@ -186,6 +182,23 @@ app.post("/uPassword",(req,res)=>{
 				})
 			}
 		})
+	})
+})
+
+app.post("/updatePassword",(req,res)=>{
+	// console.log(req.body.username,req.body.password.newPass);
+	User.updateOne({username:req.body.username},{$set:{password:bcrypt.hashSync(req.body.password.newPass,10)}},(err)=>{
+		if(err){
+			return res.status(401).send({
+				success:false,
+				message:"Internal error, Please try again later."
+			})
+		}else{
+			return res.status(200).send({
+				success:true,
+				message:"Password is successfully updated."
+			})
+		}
 	})
 })
 
