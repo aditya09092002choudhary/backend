@@ -27,7 +27,7 @@ require('./passport');
 
 
 // mongoose.connect('mongodb://localhost:27017/daily1DB');
-mongoose.connect(uri,{ useNewUrlParser: true });
+mongoose.connect("mongodb+srv://adityachoudhary1980:Aditya88@cluster0.9ikok.mongodb.net/dailyDB?retryWrites=true&w=majority");
 
 app.get("/", (req, res) => {
 	// res.send("Live");
